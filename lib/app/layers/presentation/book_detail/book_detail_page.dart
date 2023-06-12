@@ -24,33 +24,35 @@ class BookDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(book.volumeInfo!.title!)),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Hero(
-              tag: book.volumeInfo!.title!,
-              child: _buildBookImage(book),
-            ),
-            const SizedBox(height: 15),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Sinopse',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Hero(
+                tag: book.volumeInfo!.title!,
+                child: _buildBookImage(book),
               ),
-            ),
-            const SizedBox(height: 15),
-            Text(
-              book.volumeInfo?.description ?? '-',
-              textAlign: TextAlign.justify,
-              style: const TextStyle(),
-            ),
-            const SizedBox(height: 15),
-            _buildSellArea(book.saleInfo, context),
-          ],
+              const SizedBox(height: 15),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Sinopse',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
+                ),
+              ),
+              const SizedBox(height: 15),
+              Text(
+                book.volumeInfo?.description ?? '-',
+                textAlign: TextAlign.justify,
+                style: const TextStyle(),
+              ),
+              const SizedBox(height: 15),
+              _buildSellArea(book.saleInfo, context),
+            ],
+          ),
         ),
       ),
     );
