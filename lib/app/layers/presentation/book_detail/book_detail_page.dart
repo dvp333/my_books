@@ -45,7 +45,7 @@ class BookDetailPage extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               Text(
-                book.volumeInfo?.description ?? '-',
+                book.volumeInfo?.description ?? 'Sinopse não disponível',
                 textAlign: TextAlign.justify,
                 style: const TextStyle(),
               ),
