@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_books/app/layers/domain/entities/book.dart';
 import 'package:my_books/app/layers/domain/entities/search_books_result.dart';
 import 'package:my_books/app/layers/domain/usecases/base/failure.dart';
 import 'package:my_books/app/layers/domain/usecases/search_books.dart';
@@ -61,7 +62,7 @@ class HomeCubit extends Cubit<HomeState> {
       (result) => state.copyWith(
           searchResult: result,
           currentPaginationIndex: nextPageIndex,
-          books: state.books + result.items!),
+          books: state.books + result.books!),
     );
 
     emit(newState.copyWith(isLoading: false));
@@ -84,7 +85,7 @@ class HomeCubit extends Cubit<HomeState> {
       (result) => state.copyWith(
         searchText: text,
         searchResult: result,
-        books: result.items,
+        books: result.books,
         currentPaginationIndex: startIndex,
       ),
     );

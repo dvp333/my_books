@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_books/app/layers/domain/entities/search_books_result.dart';
+import 'package:my_books/app/layers/domain/entities/book.dart';
+import 'package:my_books/app/layers/domain/entities/sale_info.dart';
 import 'package:my_books/app/layers/presentation/book_detail/book_detail_page.dart';
 import 'package:my_books/app/layers/presentation/home/cubit/home_cubit.dart';
 
@@ -165,7 +166,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Widget _getBookImage(Item book) {
+  Widget _getBookImage(Book book) {
     if (book.volumeInfo!.imageLinks == null) {
       return const Icon(Icons.book);
     }
@@ -179,6 +180,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  void _hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 }

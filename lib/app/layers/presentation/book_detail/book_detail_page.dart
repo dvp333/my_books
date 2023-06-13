@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:my_books/app/layers/domain/entities/search_books_result.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_books/app/injection/injector.dart';
+import 'package:my_books/app/layers/domain/entities/book.dart';
+import 'package:my_books/app/layers/domain/entities/sale_info.dart';
+import 'package:my_books/app/layers/presentation/book_detail/cubit/book_detail_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BookDetailPage extends StatelessWidget {
@@ -11,12 +15,20 @@ class BookDetailPage extends StatelessWidget {
 
   static const routeName = '/books/detail';
 
-  final Item book;
+  final Book book;
 
-  static Route<bool> route({required Item book}) {
+  static Route<bool> route({required Book book}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => BookDetailPage(book: book),
+      builder: (context) {
+        final cubit = getIt<BookDetailCubit>();
+        WidgetsBinding.instance
+            .addPostFrameCallback((timeStamp) => cubit.init(book));
+        return BlocProvider(
+          create: (context) => cubit,
+          child: BookDetailPage(book: book),
+        );
+      },
     );
   }
 
@@ -31,9 +43,37 @@ class BookDetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Hero(
-                tag: book.volumeInfo!.title!,
-                child: _buildBookImage(book),
+              SizedBox(
+                width: double.infinity,
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Hero(
+                      tag: book.volumeInfo!.title!,
+                      child: _buildBookImage(book),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: BlocBuilder<BookDetailCubit, BookDetailState>(
+                        builder: (context, state) {
+                          return IconButton(
+                            onPressed: () {
+                              context
+                                  .read<BookDetailCubit>()
+                                  .changeFavoriteState(book);
+                            },
+                            icon: Icon(
+                              state.isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border_outlined,
+                              color: Colors.red,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 15),
               const Align(
@@ -60,12 +100,19 @@ class BookDetailPage extends StatelessWidget {
 
   Widget _buildSellArea(SaleInfo? saleInfo, BuildContext context) {
     if (saleInfo == null) return const SizedBox();
+
+    var price = '';
+
+    if (saleInfo.retailPrice != null) {
+      price =
+          ' ${saleInfo.retailPrice!.amount} ${saleInfo.retailPrice!.currencyCode!}';
+    }
+
     return ElevatedButton(
         onPressed: () {
           _launchUrl(book.saleInfo!.buyLink, context);
         },
-        child: Text('Comprar '
-            '${saleInfo.retailPrice!.amount} ${saleInfo.retailPrice!.currencyCode!}'));
+        child: Text('Comprar$price'));
   }
 
   void _launchUrl(url, BuildContext context) {
@@ -85,7 +132,7 @@ class BookDetailPage extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  _buildBookImage(Item book) {
+  _buildBookImage(Book book) {
     if (book.volumeInfo?.imageLinks == null) return const Icon(Icons.book);
     return CachedNetworkImage(
       imageUrl: book.volumeInfo!.imageLinks!.thumbnail!,

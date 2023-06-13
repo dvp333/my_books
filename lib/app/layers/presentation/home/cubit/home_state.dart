@@ -7,7 +7,7 @@ class HomeState {
   final String? errorMessage;
   final bool isLoading;
   final int currentPaginationIndex;
-  final List<Item> books;
+  final List<Book> books;
 
   const HomeState({
     required this.searchResult,
@@ -34,7 +34,7 @@ class HomeState {
       String? errorMessage,
       bool? isLoading,
       int? currentPaginationIndex,
-      List<Item>? books}) {
+      List<Book>? books}) {
     return HomeState(
       searchText: searchText ?? this.searchText,
       searchResult: searchResult ?? this.searchResult,

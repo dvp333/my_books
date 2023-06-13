@@ -9,12 +9,20 @@ void _registerRepositories() {
   getIt.registerFactory<BooksRepository>(
     () => BooksRepositoryImpl(
       remoteDatasource: getIt(),
+      localDatasource: getIt(),
     ),
   );
 }
 
 void _registerDataSources() {
-  getIt.registerFactory<RemoteBooksDatasource>(
-    () => RemoteBooksDatasourceImpl(),
-  );
+  getIt
+    ..registerSingletonAsync(() => SharedPreferences.getInstance())
+    ..registerFactory<RemoteBooksDatasource>(
+      () => RemoteBooksDatasourceImpl(),
+    )
+    ..registerFactory<LocalBooksDatasource>(
+      () => LocalBooksDatasourceImpl(
+        preferences: getIt(),
+      ),
+    );
 }

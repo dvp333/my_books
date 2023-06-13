@@ -1,9 +1,20 @@
 part of '../injector.dart';
 
 void _initializeDomainLayer() {
-  getIt.registerLazySingleton(
-    () => SearchBooks(
-      repository: getIt(),
-    ),
-  );
+  getIt
+    ..registerFactory(
+      () => SearchBooks(
+        repository: getIt(),
+      ),
+    )
+    ..registerFactory(
+      () => SaveBooksToFavorites(
+        repository: getIt(),
+      ),
+    )
+    ..registerFactory(
+      () => GetFavoriteBooks(
+        repository: getIt(),
+      ),
+    );
 }

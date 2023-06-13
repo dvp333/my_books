@@ -7,7 +7,7 @@ import 'package:my_books/app/layers/domain/usecases/search_books.dart';
 
 class RemoteBooksDatasourceImpl implements RemoteBooksDatasource {
   static const booksApiUrl =
-      'https://www.googleapis.com/books/v1/volumes?printType=books&fields=totalItems,items(volumeInfo/title,volumeInfo/description,saleInfo/retailPrice,saleInfo/buyLink,volumeInfo/imageLinks)';
+      'https://www.googleapis.com/books/v1/volumes?printType=books&fields=totalItems,items(id,volumeInfo/title,volumeInfo/description,saleInfo/retailPrice,saleInfo/buyLink,volumeInfo/imageLinks)';
 
   @override
   Future<SearchBooksResult> searchBooksByName(SearchBooksParams params) async {
