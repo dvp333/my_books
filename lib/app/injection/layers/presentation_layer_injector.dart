@@ -8,5 +8,8 @@ void _initializePresentationLayer() {
     ..registerFactory(() => BookDetailCubit(
           getFavoriteBooks: getIt(),
           saveBooksToFavorites: getIt(),
+        ))
+    ..registerFactory(() => FavoritesCubit(
+          getFavoriteBooks: getIt(),
         ));
 }

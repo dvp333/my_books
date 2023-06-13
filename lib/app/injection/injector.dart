@@ -12,6 +12,7 @@ import 'package:my_books/app/layers/domain/usecases/get_favorite_books.dart';
 import 'package:my_books/app/layers/domain/usecases/save_books_to_favorites.dart';
 import 'package:my_books/app/layers/domain/usecases/search_books.dart';
 import 'package:my_books/app/layers/presentation/book_detail/cubit/book_detail_cubit.dart';
+import 'package:my_books/app/layers/presentation/favorites/cubit/favorites_cubit.dart';
 import 'package:my_books/app/layers/presentation/home/cubit/home_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_books/app/layers/domain/entities/book.dart';
 import 'package:my_books/app/layers/domain/entities/sale_info.dart';
 import 'package:my_books/app/layers/presentation/book_detail/book_detail_page.dart';
+import 'package:my_books/app/layers/presentation/favorites/favorites_page.dart';
 import 'package:my_books/app/layers/presentation/home/cubit/home_cubit.dart';
 
 class HomePage extends StatefulWidget {
@@ -50,6 +51,13 @@ class _HomePageState extends State<HomePage> {
         title: Text(
           widget.title,
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(FavoritesPage.route());
+              },
+              icon: const Icon(Icons.favorite)),
+        ],
       ),
       body: Center(
         child: Padding(
