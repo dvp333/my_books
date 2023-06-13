@@ -91,6 +91,7 @@ class BookDetailPage extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               _buildSellArea(book.saleInfo, context),
+              const SizedBox(height: 15),
             ],
           ),
         ),
