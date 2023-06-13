@@ -1,7 +1,7 @@
 part of 'home_cubit.dart';
 
 @immutable
-class HomeState {
+class HomeState with EquatableMixin {
   final String searchText;
   final SearchBooksResult searchResult;
   final String? errorMessage;
@@ -45,4 +45,14 @@ class HomeState {
       books: books ?? this.books,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        searchText,
+        searchResult,
+        errorMessage,
+        isLoading,
+        currentPaginationIndex,
+        ...books
+      ];
 }

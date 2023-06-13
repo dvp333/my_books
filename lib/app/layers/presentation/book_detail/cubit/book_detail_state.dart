@@ -1,7 +1,7 @@
 part of 'book_detail_cubit.dart';
 
 @immutable
-class BookDetailState {
+class BookDetailState with EquatableMixin {
   final bool isFavorite;
   final String? errorMsg;
 
@@ -20,4 +20,7 @@ class BookDetailState {
       errorMsg: errorMsg,
     );
   }
+
+  @override
+  List<Object?> get props => [isFavorite, errorMsg];
 }
